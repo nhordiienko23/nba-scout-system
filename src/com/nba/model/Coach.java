@@ -1,13 +1,33 @@
 package com.nba.model;
 
+import com.nba.exception.InvalidStaffDataException;
+
 public class Coach extends Staff {
     private int experienceYears;
     private int championshipsWon;
 
     public Coach(String name, double baseSalary, int experienceYears, int championshipsWon) {
         super(name, baseSalary);
+        validateExperienceYear(experienceYears);
         this.experienceYears = experienceYears;
+        validateChampionshipsWon(championshipsWon);
         this.championshipsWon = championshipsWon;
+    }
+
+    private void validateChampionshipsWon(int championshipsWon) {
+        if (championshipsWon <= 0) {
+            throw new InvalidStaffDataException("Championships Won must be positive number");
+        } else if (championshipsWon < this.championshipsWon) {
+            throw new InvalidStaffDataException("Championships Won cannot decrease!");
+        }
+    }
+
+    private void validateExperienceYear(int experienceYears) {
+        if (experienceYears <= 0) {
+            throw new InvalidStaffDataException("Experience year must be positive number");
+        } else if (experienceYears < this.experienceYears) {
+            throw new InvalidStaffDataException("Experience year cannot decrease!");
+        }
     }
 
     // The coach receives 5% for each year of experience + a fixed reward for each ring (championship)
@@ -29,20 +49,13 @@ public class Coach extends Staff {
     }
 
     public void setChampionshipsWon(int championshipsWon) {
-        if (this.championshipsWon < championshipsWon) {
-            this.championshipsWon = championshipsWon;
-        } else {
-            System.out.println("To update Championships Won, number must be bigger than previous number");
-        }
-
+        validateChampionshipsWon(championshipsWon);
+        this.championshipsWon = championshipsWon;
     }
 
     public void setExperienceYears(int experienceYears) {
-        if (this.experienceYears < experienceYears) {
-            this.experienceYears = experienceYears;
-        } else {
-            System.out.println("To update Experience Year, number must be bigger than previous number");
-        }
+        validateExperienceYear(experienceYears);
+        this.experienceYears = experienceYears;
     }
 
     public int getExperienceYears() {

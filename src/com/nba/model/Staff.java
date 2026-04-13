@@ -1,5 +1,7 @@
 package com.nba.model;
 
+import com.nba.exception.InvalidStaffDataException;
+
 import java.io.Serializable;
 
 public abstract class Staff implements Serializable, Taxable {
@@ -11,10 +13,21 @@ public abstract class Staff implements Serializable, Taxable {
 
     public Staff(String name, double baseSalary) {
         this.id = idCounter++;
+        validateName(name);
         this.name = name;
+        validateBaseSalary(baseSalary);
         this.baseSalary = baseSalary;
     }
-
+    private void validateName(String name){
+        if(name ==null || name.isEmpty()){
+            throw new InvalidStaffDataException("Name can't be null or empty");
+        }
+    }
+    private void validateBaseSalary(double baseSalary){
+        if(baseSalary <=0){
+            throw new InvalidStaffDataException("Base salary must be bigger than 0");
+        }
+    }
     public abstract double calculateBonus();
 
     public int getId() {
@@ -30,10 +43,12 @@ public abstract class Staff implements Serializable, Taxable {
     }
 
     public void setName(String name) {
+        validateName(name);
         this.name = name;
     }
 
     public void setBaseSalary(double baseSalary) {
+        validateBaseSalary(baseSalary);
         this.baseSalary = baseSalary;
     }
 
