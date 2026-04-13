@@ -39,13 +39,16 @@ public abstract class Staff implements Serializable, Taxable {
 
     @Override
     public double calculateTax() {
-        return (baseSalary + calculateBonus()) * TAX_RATE;
+        return calculateTotalSalary() * TAX_RATE;
     }
 
+    public double calculateTotalSalary(){
+        return baseSalary+calculateBonus();
+    }
     @Override
     public String toString() {
         double total = baseSalary + calculateBonus();
         return String.format("ID: %03d | Name: %-15s | Total Pay: $%,.0f | Tax: $%,.0f",
-                id, name, total, calculateTax());
+                id, name, calculateTotalSalary(), calculateTax());
     }
 }
