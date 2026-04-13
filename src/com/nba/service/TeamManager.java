@@ -4,6 +4,7 @@ import com.nba.exception.StaffNotFoundException;
 import com.nba.model.Player;
 import com.nba.model.Staff;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +76,23 @@ public class TeamManager {
             }
         }
         return topEarned;
+    }
+
+    public void saveTeamToFile(String filename){
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filename))){
+            objectOutputStream.writeObject(team);
+            System.out.println("Team data saved successfully to " + filename);
+        }catch (IOException e){
+            System.err.println("Error saving team: " + e.getMessage());
+        }
+    }
+    public  void loadTeamFromFile(String filename){
+        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))){
+            team = (Map<Integer, Staff>) objectInputStream.readObject();
+            System.out.println("Team data loaded successfully from " + filename);
+        }catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading team: " + e.getMessage());
+        }
     }
 
 }

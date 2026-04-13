@@ -53,6 +53,17 @@ public class Main {
         System.out.println("\n--- Testing Data Validation (Fail-Fast) ---");
         testingDataValidation();
 
+        System.out.println("\n--- Testing data writing to file ---");
+        String file = "nba_team.dat";
+
+        teamManager.saveTeamToFile(file);
+
+        System.out.println("\n--- Testing reading data from File ---");
+        TeamManager loadedManager = new TeamManager();
+        loadedManager.loadTeamFromFile(file);
+        loadedManager.getAllStaff().forEach(System.out::println);
+
+
     }
 
     public static void testingDataValidation(){
@@ -60,21 +71,21 @@ public class Main {
             System.out.println("Trying to create player with rating 150...");
             Player brokenPlayer = new Player("Fake Star", 500000, 150, Position.C);
         } catch (InvalidStaffDataException e) {
-            System.err.println("Validation Caught: " + e.getMessage());
+            System.out.println("Validation Caught: " + e.getMessage());
         }
 
         try {
             System.out.println("\nTrying to create coach with negative salary...");
             Coach brokenCoach = new Coach("Bad Coach", -1000, 5, 0);
         } catch (InvalidStaffDataException e) {
-            System.err.println("Validation Caught: " + e.getMessage());
+            System.out.println("Validation Caught: " + e.getMessage());
         }
 
         try {
             System.out.println("\nTrying to create player without any position...");
             Player noPosPlayer = new Player("Ghost Player", 300000, 75); // Массив позиций будет пуст
         } catch (InvalidStaffDataException e) {
-            System.err.println("Validation Caught: " + e.getMessage());
+            System.out.println("Validation Caught: " + e.getMessage());
         }
     }
 
