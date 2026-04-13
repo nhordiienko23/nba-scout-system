@@ -23,6 +23,22 @@ public class Main {
             }
         }
 
+        System.out.println("\n--- Top Ranked Players (The GOATs) ---");
+        List<Player> topRanked = teamManager.getHighestRatingStaff();
+
+        if (!topRanked.isEmpty()) {
+            int bestRating = topRanked.get(0).getRating();
+            System.out.println("Top Rating in the Team: [" + bestRating + "] (" + topRanked.size() + " players found)");
+
+            for (Player player : topRanked) {
+                // Используем %d для целого числа (рейтинга) и %s для строки
+                System.out.printf(" - %-15s | Position: %-3s | Rating: %d\n",
+                        player.getName(), player.getPosition(), player.getRating());
+            }
+        } else {
+            System.out.println("No players found in the system.");
+        }
+
         int idToRemove = 3;
         if (teamManager.removeStaff(idToRemove)) {
             System.out.println("\nStaff with ID " + idToRemove + " has been removed.");
