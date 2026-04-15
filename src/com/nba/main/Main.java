@@ -5,6 +5,7 @@ import com.nba.exception.StaffNotFoundException;
 import com.nba.model.*;
 import com.nba.service.TeamManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -63,6 +64,43 @@ public class Main {
         loadedManager.loadTeamFromFile(file);
         loadedManager.getAllStaff().forEach(System.out::println);
 
+        System.out.println("\n--- Testing getAllBiggerThanBaseSalary  ---");
+        List<Staff> getAllBiggerThanBaseSalary = teamManager.getAllBiggerThanBaseSalary(700000);
+        for (Staff staff :getAllBiggerThanBaseSalary){
+            System.out.println("name: "+staff.getName()+" base salary "+staff.getBaseSalary());
+        }
+
+        System.out.println("\n--- Testing getByName  ---");
+        Player towns = new Player("Karl Anthony Towns", 1, 98, Position.SG);
+        teamManager.addStaff(towns);
+        List<Staff> getByName = teamManager.getByName("Anthony");
+        for (Staff staff :getByName){
+            System.out.println("name: "+staff.getName());
+        }
+        System.out.println("\n--- Testing getAllCoachesBiggerThanExperienceYears  ---");
+        Coach kerr = new Coach("Steve Kerr", 100000,15,4);
+        Coach redick = new Coach("JJ Redick", 70000,5,0);
+        teamManager.addStaff(kerr);
+        teamManager.addStaff(redick);
+        List<Coach> getAllCoachesBiggerThanExperienceYears = teamManager.getAllCoachesBiggerThanExperienceYears(15);
+        for (Coach coach :getAllCoachesBiggerThanExperienceYears){
+            System.out.println("Name: "+coach.getName()+" ExperienceYears "+coach.getExperienceYears());
+        }
+        System.out.println("\n--- Testing getCoachesBiggerThanChampionshipWon  ---");
+        List<Coach> getCoachesBiggerThanChampionshipWon = teamManager.getCoachesBiggerThanChampionshipWon(1);
+        for (Coach coach:getCoachesBiggerThanChampionshipWon){
+            System.out.println("Name: "+coach.getName()+" ChampionshipWon "+coach.getChampionshipsWon());
+        }
+        System.out.println("\n--- Testing getPlayersBiggerThanBonus  ---");
+        List<Player> getPlayersBiggerThanBonus = teamManager.getPlayersBiggerThanBonus(1000);
+        for (Player player:getPlayersBiggerThanBonus){
+            System.out.println("Name: "+player.getName()+" bonus "+player.calculateBonus());
+        }
+        System.out.println("\n--- Testing getPlayersByPositions  ---");
+        List<Player> getPlayersByPositions = teamManager.getPlayersByPositions(Position.SG,Position.C);
+        for (Player player:getPlayersByPositions){
+            System.out.println("Name: "+player.getName()+" positions "+player.getPositions());
+        }
 
     }
 
@@ -94,7 +132,6 @@ public class Main {
         Player pippen = new Player("Scottie Pippen", 700000, 92, Position.SF, Position.PF);
         Player rodman = new Player("Dennis Rodman", 500000, 88, Position.PF, Position.C);
 
-        // Пример игрока с тремя позициями
         Player leBron = new Player("LeBron James", 900000, 98, Position.SF, Position.PF, Position.PG);
 
         Player edwards = new Player("Anthony Edwards", 1000000, 98, Position.SG);
