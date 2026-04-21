@@ -10,12 +10,12 @@ public class StaffDto {
     public double baseSalary;
 
     // fields for player
-    public Integer rating;
+    public int rating;
     public List<Position> positions;
 
     // fields for coach
-    public Integer experienceYears;
-    public Integer championshipsWon;
+    public int experienceYears;
+    public int championshipsWon;
 
 
 }

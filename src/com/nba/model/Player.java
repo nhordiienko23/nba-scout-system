@@ -17,10 +17,7 @@ public class Player extends Staff {
         validateRating(rating);
         this.rating = rating;
     }
-    public void recordNewAchievements(int rating, Position...positionArray){
-        setRating(rating);
-        setPositions(positionArray);
-    }
+
     private void validatePosition(Position... positionArray) {
         if (positionArray == null || positionArray.length == 0) {
             throw new InvalidStaffDataException("Player must have at least one position");

@@ -31,8 +31,8 @@ public class TeamManagerController {
     }
 
     @PutMapping("staff/{id}")
-    public String updateStaff(@PathVariable int id, @RequestBody Staff updateStaff) {
-        teamManager.updateStaff(id, updateStaff);
+    public String updateStaff(@PathVariable int id, @RequestBody StaffDto dto) {
+        teamManager.patchStaff(id, dto);
         teamManager.saveTeamToFile(path);
         return "Staff with ID " + id + " updated successfully!";
     }

@@ -31,21 +31,33 @@ public class TeamManager {
         throw new InvalidStaffDataException("Unknown staff type");
     }
 
-    public void updateStaff(int id, Staff updateStaff) {
+    public void patchStaff(int id, StaffDto dto) {
         validateStaffExists(id);
         Staff existingStaff = team.get(id);
-        existingStaff.setName(updateStaff.getName());
-        existingStaff.setBaseSalary(updateStaff.getBaseSalary());
 
-        if (existingStaff instanceof Player && updateStaff instanceof Player) {
-            Player existingPlayer = (Player) existingStaff;
-            Player updatePlayer = (Player) updateStaff;
-            Position[] positions = updatePlayer.getPositions().toArray(new Position[0]);
-            existingPlayer.recordNewAchievements(updatePlayer.getRating(), positions);
-        } else if (existingStaff instanceof Coach && updateStaff instanceof Coach) {
-            Coach existingCoach = (Coach) existingStaff;
-            Coach updateCoach = (Coach) updateStaff;
-            existingCoach.recordNewAchievements(updateCoach.getExperienceYears(), updateCoach.getChampionshipsWon());
+        // 1. Общие поля
+        if (dto.name != null && !dto.name.isEmpty() && !dto.name.equals(existingStaff.getName())) {
+            existingStaff.setName(dto.name);
+        }
+        if (dto.baseSalary != 0 && dto.baseSalary != existingStaff.getBaseSalary()) {
+            existingStaff.setBaseSalary(dto.baseSalary);
+        }
+
+        // 2. Обновление через проверку типа объекта в памяти (instanceof)
+        if (existingStaff instanceof Player player) {
+            if (dto.rating != 0 && dto.rating != player.getRating()) {
+                player.setRating(dto.rating);
+            }
+            if (dto.positions != null && !dto.positions.isEmpty()) {
+                player.setPositions(dto.positions.toArray(new Position[0]));
+            }
+        } else if (existingStaff instanceof Coach coach) {
+            if (dto.experienceYears != 0 && dto.experienceYears != coach.getExperienceYears()) {
+                coach.setExperienceYears(dto.experienceYears);
+            }
+            if (dto.championshipsWon != 0 && dto.championshipsWon != coach.getChampionshipsWon()) {
+                coach.setChampionshipsWon(dto.championshipsWon);
+            }
         }
     }
 
