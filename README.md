@@ -1,46 +1,50 @@
 # Team Management System
 
-A robust **Spring Boot** backend application designed for managing professional sports rosters and financial data. The project emphasizes clean architecture, API reliability, and effective data management using Object-Oriented Programming (OOP) principles.
+A robust Spring Boot backend application designed for managing professional sports rosters and financial data. The project emphasizes clean architecture, API reliability, and effective data management using Object-Oriented Programming (OOP) principles, now fully integrated with PostgreSQL and Docker.
 
 ## 🚀 Key Features
 
-* **RESTful API**: Full CRUD operations for team management with sophisticated data filtering (e.g., salaries, rankings, experience, positions).
-* **Data Persistence**: Reliable state management utilizing **Java Serialization** for file-based binary storage, integrated within a Spring service layer.
-* **Error Handling**: Implemented **Global Exception Handling** (`@ControllerAdvice`) to ensure clean API responses (400, 404, etc.) and a "Fail-fast" validation approach for data integrity.
-* **Optimized Data Management**: Utilizes efficient data structures (`HashMap`, `ArrayList`, `EnumSet`) for rapid data retrieval and multi-position player logic.
-* **Clean Code**: Adherence to **SOLID** and **DRY** principles to ensure maintainability and scalability.
+* RESTful API: Full CRUD operations for team management with sophisticated data filtering (salaries, rankings, experience, positions).
+* Data Persistence: Reliable storage utilizing PostgreSQL with Spring Data JPA.
+* Containerization: Fully dockerized environment with PostgreSQL and application services orchestration via Docker Compose.
+* Error Handling: Global Exception Handling (@ControllerAdvice) for standardized API responses and data integrity validation.
+* API Documentation: Integrated Swagger UI for interactive API testing.
 
 ## 🛠 Tech Stack
 
-* **Framework**: Spring Boot 3
-* **Language**: Java 21
-* **API Documentation**: Springdoc OpenAPI (Swagger UI)
-* **Design Patterns**: DTO pattern, Service-Layer architecture, Global Exception Handling.
+* Framework: Spring Boot 3
+* Language: Java 21
+* Database: PostgreSQL 16
+* Orchestration: Docker & Docker Compose
+* Documentation: Springdoc OpenAPI (Swagger UI)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-* **Java JDK 17** or higher
-* **Maven**
+* Docker & Docker Compose
+* Java 21
+* Maven
 
 ### Installation & Run
 
-1. Clone the repository: 
-   ```bash
+1. Clone the repository:
+   ```
    git clone [https://github.com/nhordiienko23/team-management-system.git](https://github.com/nhordiienko23/team-management-system.git)
-
-Navigate to the project directory:
-```bash
-cd team-management-system
-```
-Build the project:
-```
-mvn clean install
-```
-Run the application:
-```
-mvn spring-boot:run
-```
-Access the interactive API documentation at:
-```
-http://localhost:8080/swagger-ui.html
+   cd team-management-system
+    ```
+2. Build the project:
+   ```
+   mvn clean package
+   ```
+3. Run the entire infrastructure (Database + App):
+    ```
+   docker-compose up --build
+   ```
+4. Access the interactive API documentation at:  
+     ```
+   http://localhost:8080/swagger-ui.html
+   ```
+## 🏗 Project Architecture
+* docker-compose.yml: Defines the services (PostgreSQL db and the Spring Boot app) and manages networking.
+* Dockerfile: Defines the multi-stage build process for the application image.
+* application.yml: Centralized configuration supporting both local and Docker environments through environment variables.
