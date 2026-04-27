@@ -1,32 +1,37 @@
 package com.nba.dto;
 
 import com.nba.model.Position;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
 
+@Schema(description = "Data Transfer Object for creating or updating staff members")
 public class StaffDto {
 
+    @Schema(description = "Type of staff", example = "player", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Type is mandatory")
     public String type;
 
-    @NotBlank(message = "Name is mandatory")
+    @Schema(description = "Full name of the staff member", example = "LeBron James")
     public String name;
 
+    @Schema(description = "Base salary in dollars", example = "50000.0")
     @Positive(message = "Base salary must be greater than zero")
     public double baseSalary;
 
-    // fields for player
-    @Min(0)
-    @Max(100)
+    @Schema(description = "Player rating (0-100)", example = "95")
+    @Min(0) @Max(100)
     public int rating;
 
+    @Schema(description = "List of positions", example = "[\"PG\", \"SF\"]")
     public List<Position> positions;
 
-    // fields for coach
+    @Schema(description = "Years of coaching experience", example = "10")
     @Min(0)
     public int experienceYears;
 
+    @Schema(description = "Number of championships won", example = "3")
     @Min(0)
     public int championshipsWon;
 
